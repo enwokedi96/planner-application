@@ -28,11 +28,11 @@ $( 'document' ).ready(function(){
                 newCol.attr("class","saveBtn",)
                 newCol.prepend(`<i class="fas fa-save">`)
             }
-            newRow.css({"display":"flexbox",
-                        //"border": "solid 2px #76adff",
-                        "margin-top":"10px"})
 
         }
+        newRow.css({"display":"flexbox",
+                        //"border": "solid 2px #76adff",
+                        "margin-top":"10px"})
         timeblocks.append(newRow)
     }
 }
