@@ -25,10 +25,15 @@ $( 'document' ).ready(function(){
                 newCol.addClass("hour")
             }
             else if (j===1){
-                (time<currentHour)?newCol.attr("class","past"):(time==currentHour)?newCol.attr("class","present"):newCol.attr("class","future") ; 
+                console.log(time,currentHour)
+                if (time<currentHour){
+                    newCol.addClass("past")}
+                else if(time==currentHour){
+                    newCol.addClass("class","present")}
+                else {newCol.addClass("class","future"); } 
             }
-            else if (j===2){
-                newCol.attr("class","saveBtn")
+            else {
+                newCol.addClass("saveBtn")
                 newCol.prepend(`<i class="fas fa-save">`)
             }
             newRow.append(newCol)
