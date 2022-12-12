@@ -5,8 +5,8 @@ $( 'document' ).ready(function(){
     var currentDate = $('#currentDay')
     var timeblocks = $('.container')
     var rowClasses = ['col-sm-2 col-md-2 col-lg-1',
-                        'col-sm-7 col-md-8 col-lg-10',
-                        'col-sm-3 col-md-2 col-lg-2']
+                        'col-sm-8 col-md-8 col-lg-9',
+                        'col-sm-2 col-md-2 col-lg-2']
     var currentHour = moment().hours();
     currentDate.text(moment().format('LL'))
 
