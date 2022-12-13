@@ -45,17 +45,16 @@ $( 'document' ).ready(function(){
                 (time<currentHour)?newCol.addClass("past") :
                 (time==currentHour)?newCol.addClass("present") :
                 newCol.addClass("future"); 
-                // add id coppesponding to time block
-                newCol.attr({'id': `${time}`,"contenteditable":"true"});
-                //
-                newCol.css({'display':'flex','justify-content': 'baseline'})
+                // add editable func
+                newCol.attr({"id":`schedule_${time}`,"contenteditable":"true"});
+                //newCol.css({'display':'flex','justify-content': 'baseline'})
             }
             // save blocks
             else {
                 newCol.addClass("saveBtn")
                 newCol.prepend(`<i class="fas fa-save">`)
                 // add id coppesponding to time block
-                newCol.attr({'id': `button_${time}`})
+                newCol.attr({'id': `${time}`})
             }
             newRow.append(newCol)
         }
@@ -68,15 +67,17 @@ $( 'document' ).ready(function(){
         var id = event.target.id;
         var clickedSchedule = $(`#${id}`);
         console.log(`Currently on event: ${id}`);
-        text = clickedSchedule.text()
-        loadScheduleToStorage(id,text)
+        //text = clickedSchedule.text()
+        //loadScheduleToStorage(id,text)
         //event.stopPropagation();
     })
 
     var saveBtn = $('.saveBtn');
     saveBtn.on('click', function(event){
-        var saveId = event.target.id;
-        var clickedSchedule = $(`#${id}`);
+        var id = event.target.id;
+        var clickedSchedule = $(`#schedule_${id}`);
+        text = clickedSchedule.text()
+        loadScheduleToStorage(id,text)
     })
 }
 )
