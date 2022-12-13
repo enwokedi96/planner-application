@@ -6,8 +6,10 @@ if (localStorage.getItem('schedule')===null){
     localStorage.setItem('schedule',JSON.stringify(schedule));
 }
 function loadScheduleToStorage(id,text){
+    console.log(`get id ${id} and store '${text}'`);
     var allSchedule = JSON.parse(localStorage.getItem('schedule'));
     allSchedule[`${id}`] = text;
+    localStorage.setItem('schedule',JSON.stringify(allSchedule))
 }
 
 $( 'document' ).ready(function(){
@@ -52,6 +54,8 @@ $( 'document' ).ready(function(){
             else {
                 newCol.addClass("saveBtn")
                 newCol.prepend(`<i class="fas fa-save">`)
+                // add id coppesponding to time block
+                newCol.attr({'id': `button_${time}`})
             }
             newRow.append(newCol)
         }
@@ -61,10 +65,18 @@ $( 'document' ).ready(function(){
     }
 
     timeblocks.on('click', function(event){
-        console.log(`Currently on event: ${event.target.id}`)
-        var clickedSchedule = event.target.id //$(`#${event.target.id}`);
-        //currentSchedule.attr({"contenteditable":"true"});
+        var id = event.target.id;
+        var clickedSchedule = $(`#${id}`);
+        console.log(`Currently on event: ${id}`);
+        text = clickedSchedule.text()
+        loadScheduleToStorage(id,text)
         //event.stopPropagation();
+    })
+
+    var saveBtn = $('.saveBtn');
+    saveBtn.on('click', function(event){
+        var saveId = event.target.id;
+        var clickedSchedule = $(`#${id}`);
     })
 }
 )
