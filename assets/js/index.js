@@ -11,24 +11,26 @@ function persistScheduleOnScreen(obj){
         console.log('loading from storage...');
         var allSchedule = JSON.parse(localStorage.getItem('schedule'));
     }
-    else{var allSchedule = obj;}
+    else{
+        console.log('loading after schedule input...');
+        var allSchedule = obj;}
     // check all storage values and display on screen
     for (let i=0; i<Object.keys(allSchedule).length; i++){
         var currentSchedule = $(`#schedule_${Object.keys(allSchedule)[i]}`);
         currentSchedule.text(allSchedule[`${Object.keys(allSchedule)[i]}`]) ;
         //currentSchedule.innerHTML= allSchedule[`${Object.keys(allSchedule)[i]}`]
-        console.log(currentSchedule,allSchedule[`${Object.keys(allSchedule)[i]}`]);
+        //console.log(allSchedule[`${Object.keys(allSchedule)[i]}`]);
         }
     }
 
 function loadScheduleToStorage(id,text){
     console.log(`get id ${id} and store '${text}'`);
     var allSchedule = JSON.parse(localStorage.getItem('schedule'));
-    allSchedule[`${id}`] = text;
+    
     // check all storage values and update if current or past time
     for (let i=0; i<Object.keys(allSchedule).length; i++){
-        if (Object.keys(allSchedule)[i]===`${id}`){continue;}
-        if (Object.values(allSchedule)[i] !== ''){
+        console.log()
+        if (Object.keys(allSchedule)[i]!=id){ //Object.values(allSchedule)[i] !== ''
             if (Object.keys(allSchedule)[i]<moment().hours()){
                 allSchedule[`${Object.keys(allSchedule)[i]}`] = 'This event has already passed!';
             }
@@ -37,8 +39,10 @@ function loadScheduleToStorage(id,text){
             }
             else {continue;}
             }
+        else{allSchedule[`${id}`] = text;}
     }
     localStorage.setItem('schedule',JSON.stringify(allSchedule));
+    delay(200);
     persistScheduleOnScreen(allSchedule);
 }
 
@@ -54,9 +58,6 @@ $( 'document' ).ready(function(){
                         'col-2']
     var currentHour = moment().hours();
     currentDate.text(moment().format('LL'))
-
-    // load contents from memory
-    persistScheduleOnScreen(placeholder);
 
     for (var i=0; i<9; i++){
         time = 9+i;
@@ -74,7 +75,7 @@ $( 'document' ).ready(function(){
             }
             // schedule blocks
             else if (j===1){
-                console.log(time,currentHour);
+                //console.log(time,currentHour);
                 // apply colours depending on time
                 (time<currentHour)?newCol.addClass("past") :
                 (time==currentHour)?newCol.addClass("present") :
@@ -97,12 +98,21 @@ $( 'document' ).ready(function(){
         timeblocks.append(newRow)
     }
 
+    // load contents from memory
+    persistScheduleOnScreen(placeholder);
+
     var saveBtn = $('.saveBtn');
     saveBtn.on('click', function(event){
         var id = event.target.id;
         var clickedSchedule = $(`#schedule_${id}`);
         text = clickedSchedule.text()
-        loadScheduleToStorage(id,text)
+        loadScheduleToStorage(id,text);
+        //delay(200);
     })
 }
 )
+
+// timeout used to add delays (adapted)
+const delay = (delayInms) => {
+    return new Promise(resolve => setTimeout(resolve, delayInms));
+  }
