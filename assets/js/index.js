@@ -5,8 +5,9 @@ var schedule = {
 if (localStorage.getItem('schedule')===null){
     localStorage.setItem('schedule',JSON.stringify(schedule));
 }
-function loadSchedule(id){
-
+function loadScheduleToStorage(id,text){
+    var allSchedule = JSON.parse(localStorage.getItem('schedule'));
+    allSchedule[`${id}`] = text;
 }
 
 $( 'document' ).ready(function(){
