@@ -11,18 +11,18 @@ $( 'document' ).ready(function(){
     currentDate.text(moment().format('LL'))
 
     for (var i=0; i<9; i++){
-        var newRow = $("<div class='row rowStyle'></div>")
+        time = 9+i;
+        var newRow = $("<div class='row time-block rowStyle'></div>")
         
         for (var j=0; j<3; j++){
             var newCol = $(`<div class=${rowClasses[j]} id ='${j}'></div>`)
             // time blocks
             if (j===0){
-                newCol.css("background-color","gold")
-                time = 9+i;
-                (time<12)? timePeriod = 'am': timePeriod = 'pm';
-                (time<10)?extTime='0'+`${time}`:extTime=`${time}`
-                newCol.text(extTime+':00'+timePeriod)
-                newCol.addClass("hour time-block")
+                newCol.css("background-color","gold");
+                (time<12)? timePeriod = 'AM': timePeriod = 'PM';
+                (time<10)?exactTime=`0${time}:00${timePeriod}`:exactTime=`${time}:00${timePeriod}`
+                newCol.text(exactTime);
+                newCol.addClass("hour");
             }
             // schedule blocks
             else if (j===1){
@@ -42,5 +42,9 @@ $( 'document' ).ready(function(){
                         "margin-bottom":"10px"})
         timeblocks.append(newRow)
     }
+
+    timeblocks.on('click', function(event){
+        console.log(event.target.id)
+    })
 }
 )
