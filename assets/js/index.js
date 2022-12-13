@@ -25,13 +25,10 @@ $( 'document' ).ready(function(){
                 newCol.addClass("hour")
             }
             else if (j===1){
-                console.log(time,currentHour)
-                if (time<currentHour){
-                    newCol.addClass("past")}
-                else if(time==currentHour){
-                    newCol.addClass("present")}
-                else if (time>currentHour) {
-                    newCol.addClass("future"); } 
+                console.log(time,currentHour);
+                (time<currentHour)?newCol.addClass("past") :
+                (time==currentHour)?newCol.addClass("present") :
+                newCol.addClass("future"); 
             }
             else {
                 newCol.addClass("saveBtn")
