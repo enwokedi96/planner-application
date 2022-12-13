@@ -15,7 +15,7 @@ $( 'document' ).ready(function(){
         var newRow = $("<div class='row time-block rowStyle'></div>")
         
         for (var j=0; j<3; j++){
-            var newCol = $(`<div class=${rowClasses[j]} id ='${j}'></div>`)
+            var newCol = $(`<div class=${rowClasses[j]}></div>`)
             // time blocks
             if (j===0){
                 newCol.css("background-color","gold");
@@ -30,6 +30,7 @@ $( 'document' ).ready(function(){
                 (time<currentHour)?newCol.addClass("past") :
                 (time==currentHour)?newCol.addClass("present") :
                 newCol.addClass("future"); 
+                newCol.attr('id', `${time}`);
             }
             // save blocks
             else {
@@ -44,7 +45,10 @@ $( 'document' ).ready(function(){
     }
 
     timeblocks.on('click', function(event){
-        console.log(event.target.id)
+        console.log(`Currently on event: ${event.target.id}`)
+        var currentSchedule = $(`#${event.target.id}`);
+        currentSchedule.attr({"contenteditable":"true"});
+        //event.stopPropagation();
     })
 }
 )
