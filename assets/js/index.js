@@ -1,4 +1,7 @@
-var schedule = {};
+var schedule = {
+    9:'',10:'',11:'',12:'',13:'',
+    14:'',15:'',16:'',17:''
+};
 if (localStorage.getItem('schedule')===null){
     localStorage.setItem('schedule',JSON.stringify(schedule));
 }
