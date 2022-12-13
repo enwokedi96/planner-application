@@ -9,8 +9,15 @@ function loadScheduleToStorage(id,text){
     console.log(`get id ${id} and store '${text}'`);
     var allSchedule = JSON.parse(localStorage.getItem('schedule'));
     allSchedule[`${id}`] = text;
-    localStorage.setItem('schedule',JSON.stringify(allSchedule))
+    for (let i=0; i<Object.keys(allSchedule).length; i++){
+        if (Object.keys(allSchedule)[`${i}`]!=='' && i<moment().hours()){
+            allSchedule[`${id}`] = 'This event has already passed';
+        }
+    }
+    localStorage.setItem('schedule',JSON.stringify(allSchedule));
 }
+function persistSceduleOnScreen(id,text){
+    }
 
 $( 'document' ).ready(function(){
     var time;
@@ -62,15 +69,6 @@ $( 'document' ).ready(function(){
                         "margin-bottom":"10px"})
         timeblocks.append(newRow)
     }
-
-    timeblocks.on('click', function(event){
-        var id = event.target.id;
-        var clickedSchedule = $(`#${id}`);
-        console.log(`Currently on event: ${id}`);
-        //text = clickedSchedule.text()
-        //loadScheduleToStorage(id,text)
-        //event.stopPropagation();
-    })
 
     var saveBtn = $('.saveBtn');
     saveBtn.on('click', function(event){
