@@ -5,24 +5,48 @@ var schedule = {
 if (localStorage.getItem('schedule')===null){
     localStorage.setItem('schedule',JSON.stringify(schedule));
 }
+
+function persistScheduleOnScreen(obj){
+    if (obj===null||obj===undefined){
+        console.log('loading from storage...');
+        var allSchedule = JSON.parse(localStorage.getItem('schedule'));
+    }
+    else{var allSchedule = obj;}
+    // check all storage values and display on screen
+    for (let i=0; i<Object.keys(allSchedule).length; i++){
+        var currentSchedule = $(`#schedule_${Object.keys(allSchedule)[i]}`);
+        currentSchedule.text(allSchedule[`${Object.keys(allSchedule)[i]}`]) ;
+        //currentSchedule.innerHTML= allSchedule[`${Object.keys(allSchedule)[i]}`]
+        console.log(currentSchedule,allSchedule[`${Object.keys(allSchedule)[i]}`]);
+        }
+    }
+
 function loadScheduleToStorage(id,text){
     console.log(`get id ${id} and store '${text}'`);
     var allSchedule = JSON.parse(localStorage.getItem('schedule'));
     allSchedule[`${id}`] = text;
+    // check all storage values and update if current or past time
     for (let i=0; i<Object.keys(allSchedule).length; i++){
-        if (Object.keys(allSchedule)[`${i}`]!=='' && i<moment().hours()){
-            allSchedule[`${id}`] = 'This event has already passed';
-        }
+        if (Object.keys(allSchedule)[i]===`${id}`){continue;}
+        if (Object.values(allSchedule)[i] !== ''){
+            if (Object.keys(allSchedule)[i]<moment().hours()){
+                allSchedule[`${Object.keys(allSchedule)[i]}`] = 'This event has already passed!';
+            }
+            else if (Object.keys(allSchedule)[i]==moment().hours()){
+                allSchedule[`${Object.keys(allSchedule)[i]}`] = 'Current Event'
+            }
+            else {continue;}
+            }
     }
     localStorage.setItem('schedule',JSON.stringify(allSchedule));
+    persistScheduleOnScreen(allSchedule);
 }
-function persistSceduleOnScreen(id,text){
-    }
 
 $( 'document' ).ready(function(){
     var time;
     var extTime;
     var timePeriod;
+    var placeholder;
     var currentDate = $('#currentDay')
     var timeblocks = $('.container')
     var rowClasses = ['col-2',
@@ -30,6 +54,9 @@ $( 'document' ).ready(function(){
                         'col-2']
     var currentHour = moment().hours();
     currentDate.text(moment().format('LL'))
+
+    // load contents from memory
+    persistScheduleOnScreen(placeholder);
 
     for (var i=0; i<9; i++){
         time = 9+i;
