@@ -1,3 +1,11 @@
+var schedule = {};
+if (localStorage.getItem('schedule')===null){
+    localStorage.setItem('schedule',JSON.stringify(schedule));
+}
+function loadSchedule(id){
+
+}
+
 $( 'document' ).ready(function(){
     var time;
     var extTime;
@@ -27,10 +35,14 @@ $( 'document' ).ready(function(){
             // schedule blocks
             else if (j===1){
                 console.log(time,currentHour);
+                // apply colours depending on time
                 (time<currentHour)?newCol.addClass("past") :
                 (time==currentHour)?newCol.addClass("present") :
                 newCol.addClass("future"); 
-                newCol.attr('id', `${time}`);
+                // add id coppesponding to time block
+                newCol.attr({'id': `${time}`,"contenteditable":"true"});
+                //
+                newCol.css({'display':'flex','justify-content': 'baseline'})
             }
             // save blocks
             else {
@@ -46,8 +58,8 @@ $( 'document' ).ready(function(){
 
     timeblocks.on('click', function(event){
         console.log(`Currently on event: ${event.target.id}`)
-        var currentSchedule = $(`#${event.target.id}`);
-        currentSchedule.attr({"contenteditable":"true"});
+        var clickedSchedule = event.target.id //$(`#${event.target.id}`);
+        //currentSchedule.attr({"contenteditable":"true"});
         //event.stopPropagation();
     })
 }
