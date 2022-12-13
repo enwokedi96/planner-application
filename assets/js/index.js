@@ -44,7 +44,7 @@ $( 'document' ).ready(function(){
     function loadScheduleToStorage(id,text){
         console.log(`get id ${id} and store '${text}'`);
         var allSchedule = JSON.parse(localStorage.getItem('schedule'));
-        delay(50);
+        //delay(50);
         allSchedule[`${id}`] = text;
         // check all storage values and update if current or past time
         for (let i=0; i<Object.keys(allSchedule).length; i++){
@@ -61,7 +61,7 @@ $( 'document' ).ready(function(){
             console.log(`error in reading user input!`)
         }
         localStorage.setItem('schedule',JSON.stringify(allSchedule));
-        delay(100);
+        //delay(100);
         persistScheduleOnScreen(allSchedule);
     }
 
@@ -74,8 +74,8 @@ $( 'document' ).ready(function(){
             // time blocks
             if (j===0){
                 newCol.css("background-color","gold");
-                (time<12)? timePeriod = 'AM': timePeriod = 'PM';
-                (time<10)?exactTime=`0${time}:00${timePeriod}`:exactTime=`${time}:00${timePeriod}`
+                //(time<12)? timePeriod = 'AM': timePeriod = 'PM';
+                (time<10)?exactTime=`0${time}:00`:exactTime=`${time}:00`
                 newCol.text(exactTime);
                 newCol.addClass("hour");
             }
