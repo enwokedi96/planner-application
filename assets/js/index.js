@@ -29,8 +29,9 @@ $( 'document' ).ready(function(){
                 if (time<currentHour){
                     newCol.addClass("past")}
                 else if(time==currentHour){
-                    newCol.addClass("class","present")}
-                else {newCol.addClass("class","future"); } 
+                    newCol.addClass("present")}
+                else if (time>currentHour) {
+                    newCol.addClass("future"); } 
             }
             else {
                 newCol.addClass("saveBtn")
@@ -38,9 +39,8 @@ $( 'document' ).ready(function(){
             }
             newRow.append(newCol)
         }
-        newRow.css({"display":"flexbox",
-                        //"border": "solid 2px #76adff",
-                        "margin-top":"10px"})
+        newRow.css({//"border": "solid 2px #76adff",
+                        "margin-bottom":"10px"})
         timeblocks.append(newRow)
     }
 }
