@@ -26,20 +26,21 @@ function persistScheduleOnScreen(obj){
 function loadScheduleToStorage(id,text){
     console.log(`get id ${id} and store '${text}'`);
     var allSchedule = JSON.parse(localStorage.getItem('schedule'));
-    
+    delay(50);
+    allSchedule[`${id}`] = text;
     // check all storage values and update if current or past time
     for (let i=0; i<Object.keys(allSchedule).length; i++){
-        console.log()
-        if (Object.keys(allSchedule)[i]!=id){ //Object.values(allSchedule)[i] !== ''
-            if (Object.keys(allSchedule)[i]<moment().hours()){
+        console.log(Object.keys(allSchedule)[i],id)
+        if (Object.keys(allSchedule)[i]<moment().hours()){
                 allSchedule[`${Object.keys(allSchedule)[i]}`] = 'This event has already passed!';
             }
-            else if (Object.keys(allSchedule)[i]==moment().hours()){
+        else if (Object.keys(allSchedule)[i]==moment().hours()){
                 allSchedule[`${Object.keys(allSchedule)[i]}`] = 'Current Event'
             }
-            else {continue;}
+        else {console.log('event in future, can edit!')}
             }
-        else{allSchedule[`${id}`] = text;}
+    if (id==''){
+        console.log('error in reading user input!')
     }
     localStorage.setItem('schedule',JSON.stringify(allSchedule));
     delay(200);
