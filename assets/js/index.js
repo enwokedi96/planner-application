@@ -30,17 +30,17 @@ function loadScheduleToStorage(id,text){
     allSchedule[`${id}`] = text;
     // check all storage values and update if current or past time
     for (let i=0; i<Object.keys(allSchedule).length; i++){
-        console.log(Object.keys(allSchedule)[i],id)
+        //console.log(Object.keys(allSchedule)[i],id)
         if (Object.keys(allSchedule)[i]<moment().hours()){
                 allSchedule[`${Object.keys(allSchedule)[i]}`] = 'This event has already passed!';
             }
         else if (Object.keys(allSchedule)[i]==moment().hours()){
                 allSchedule[`${Object.keys(allSchedule)[i]}`] = 'Current Event'
             }
-        else {console.log('event in future, can edit!')}
+        else {console.log(`time:${Object.keys(allSchedule)[i]} | Future event, can edit!`)}
             }
     if (id==''){
-        console.log('error in reading user input!')
+        console.log(`error in reading user input!`)
     }
     localStorage.setItem('schedule',JSON.stringify(allSchedule));
     delay(200);
@@ -49,7 +49,7 @@ function loadScheduleToStorage(id,text){
 
 $( 'document' ).ready(function(){
     var time;
-    var extTime;
+    var exactTime;
     var timePeriod;
     var placeholder;
     var currentDate = $('#currentDay')
@@ -102,12 +102,14 @@ $( 'document' ).ready(function(){
     // load contents from memory
     persistScheduleOnScreen(placeholder);
 
+    // load all save buttons and listen for click
     var saveBtn = $('.saveBtn');
     saveBtn.on('click', function(event){
         var id = event.target.id;
         var clickedSchedule = $(`#schedule_${id}`);
         text = clickedSchedule.text()
         loadScheduleToStorage(id,text);
+        //event.stopPropagation();
         //delay(200);
     })
 }
